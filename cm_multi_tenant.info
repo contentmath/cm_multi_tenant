@@ -1,0 +1,6 @@
+name = Content Math Islandora Multi Tenant
+description = Multi-tenancy tweaks for Islandora
+core = 7.x
+version = 7.x-dev
+dependencies[] = islandora
+dependencies[] = email_registration

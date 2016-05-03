@@ -1,0 +1,79 @@
+<?php
+
+/**
+ * @file
+ * Main module file.
+ */
+
+/**
+ * Implements hook_form_alter().
+ */
+function cm_multi_tenant_form_alter(&$form, &$form_state, $form_id) {
+  // Remove the ability to remove this module and other related modules.
+  if ($form_id == 'system_modules') {
+    unset($form['modules']['Other']['cm_multi_tenant']);
+    unset($form['modules']['Core']['php']);
+    unset($form['modules']['Core']['update']);
+    unset($form['modules']['Core']['simpletest']);
+    unset($form['modules']['Other']['email_registration']);
+  }
+
+  // Remove the Islandora namespace admin field.
+  if ($form_id == 'islandora_repository_admin') {
+    unset($form['islandora_tabs']['islandora_namespace']);
+  }
+}
+
+/**
+ * Implements hook_islandora_object_access().
+ */
+function cm_multi_tenant_islandora_object_access($op, $object, $user) {
+  // Block all management operations for islandora and ir namespaced objects.
+  $ops = array(
+    'manage object properties',
+    'regenerate derivatives for an object',
+    'delete fedora objects and datastreams',
+    'edit fedora metadata',
+    'add fedora datastreams',
+    'ingest fedora objects',
+    'manage collection policy',
+    'migrate collection members',
+    'replace a datastream with new content, preserving version history',
+    'revert to old datastream',
+  );
+  if (preg_match('/islandora:|ir:/i', $object->id) && in_array($op, $ops)) {
+    return FALSE;
+  }
+}
+
+/**
+ * Implements hook_islandora_datastream_access().
+ */
+function cm_multi_tenant_islandora_datastream_access($op, $object, $user) {
+  // Block all management operations for islandora and ir namespaced objects.
+  $ops = array(
+    'manage object properties',
+    'regenerate derivatives for an object',
+    'delete fedora objects and datastreams',
+    'edit fedora metadata',
+    'add fedora datastreams',
+    'ingest fedora objects',
+    'manage collection policy',
+    'migrate collection members',
+    'replace a datastream with new content, preserving version history',
+    'revert to old datastream',
+  );
+
+  if (preg_match('/islandora:|ir:/i', $object->id)  && in_array($op, $ops)) {
+    return FALSE;
+  }
+}
+
+/**
+ * Implements hook_email_registration_name().
+ */
+function cm_multi_tenant_email_registration_name($edit, $account) {
+  $email_parts = explode('@', $account->mail);
+  // @TODO: Consider max length to avoid truncation. Configurable randomization.
+  return email_registration_cleanup_username($email_parts[0] . '_' . mt_rand(1, 999999));
+}

@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @file
+ * Install file.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function cm_multi_tenant_install() {
+  variable_set('email_registration_login_with_username', FALSE);
+
+  /**
+   * Example automation for setting the allowed namespace
+   * global $base_url;
+   * $url_info = parse_url($base_url);
+   * $sub = str_replace('.contentmath.com', '', $url_info['host']);
+   * variable_set('islandora_namespace_restriction_enforced', TRUE);
+   * variable_set('islandora_pids_allowed', $sub . ': ir:');
+   */
+}
