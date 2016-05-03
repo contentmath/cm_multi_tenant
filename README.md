@@ -19,7 +19,7 @@ The multisite's Islandora allowed namespaces (islandora_pids_allowed) should be 
 
 ## Documentation
 
-Further documentation for this module is available at [www.contentmath.com](https://www.contentmath.com).
+Further documentation for this module is available at [www.contentmath.com](http://www.contentmath.com/articles/2016/5/3/tightening-up-islandora-multi-tenancy).
 
 ## Troubleshooting/Issues
 
@@ -35,7 +35,7 @@ Need support or additional features or modifications?
 
 Current maintainers:
 
-* [Mitch MacKenzie](https://www.contentmath.com)
+* [Mitch MacKenzie](http://www.contentmath.com)
 
 ## License
 
